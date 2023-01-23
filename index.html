@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cotizador | Dávila</title>
+    <link rel="stylesheet" href="css/style.css" />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row mt-5">
+        <h5 class="text-primary mb-2">Calculos de tiras o flejes</h5>
+        <div class="col">
+          <table id="tb-1" class="table table-bordered fs-7">
+            <thead class="">
+              <tr>
+                <th scope="col">Calidad material</th>
+                <th scope="col">
+                  <select
+                    class="form-select border-0"
+                    id="Type_c"
+                    name="Type_c"
+                    onchange="ShowSelected();"
+                  >
+                    <option selected>Open this select menu</option>
+                    <option value="1">Hot Rolled</option>
+                    <option value="2">Hot Rolled Decapado</option>
+                    <option value="3">Cold Rolled</option>
+                    <option value="4">Galvanizado/Pintado</option>
+                  </select>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Ancho rollo (mm)</th>
+                <td id="tb_an"></td>
+              </tr>
+              <tr>
+                <th scope="row">Peso rollo (Kg)</th>
+                <td id="tb_pr"></td>
+              </tr>
+              <tr>
+                <th scope="row">Refile (Desperdicio mm)</th>
+                <td id="tb_rm"></td>
+              </tr>
+              <tr>
+                <th scope="row">Refile (Desperdicio %)</th>
+                <td id="tb_rdp"></td>
+              </tr>
+              <tr>
+                <th scope="row">Refile (Desperdicio Kg)</th>
+                <td id="tb_rdk"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div
+          class="col-1 d-none d-sm-none d-md-block work-right-text d-flex align-items-center"
+        ></div>
+        <div
+          class="col-3 d-none d-sm-none d-md-block col-lg-5 work-right-text d-flex align-items-center"
+        >
+          <img src="img/Imagen1.png" class="img-fluid" />
+        </div>
+      </div>
+
+      <div class="row mt-5 mb-5">
+        
+        <div class="col">
+          <div class="row">
+            <div class="col">
+              <!-- Button trigger modal -->
+              <button
+                type="button"
+                class="btn btn-primary"
+                data-bs-toggle="modal"
+                data-bs-target="#staticBackdrop"
+              >
+                Agregar
+              </button>
+
+              <!-- Modal -->
+              <div
+                class="modal fade"
+                id="staticBackdrop"
+                data-bs-backdrop="static"
+                data-bs-keyboard="false"
+                tabindex="-1"
+                aria-labelledby="staticBackdropLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="staticBackdropLabel">
+                        Modal title
+                      </h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <input
+                        id="da"
+                        placeholder="Dimensón ancho mm:"
+                        requered
+                        type="number"
+                      /><br /><br />
+                      <input
+                        id="cr"
+                        placeholder="Cantidad requerida kg:"
+                        type="number"
+                      /><br /><br />
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal"
+                      >
+                        Close
+                      </button>
+                      <button
+                        id="btn_guardar"
+                        class="btn btn-success"
+                        onclick="guardar()"
+                      >
+                        agregar
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <button id="btn_mostrar" class="btn btn-success" onclick="listar()">
+                Mostrar
+              </button>
+
+              <button class="btn btn-danger" id="btn_eliminar" onclick="eliminar()">eliminar</button>
+            </div>
+     
+          </div><!---End---->
+
+          <table id="tablaCal" class="table table-bordered fs-7">
+            <thead class="">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Dimensión Ancho (mm)</th>
+                <th scope="col">Cantidad Requerida (kg)</th>
+                <th scope="col">Peso Unitario / Fleje (kg)</th>
+                <th scope="col"># Flejes</th>
+                <th scope="col">Cantidad Total a Entregar (kg)</th>
+                <th scope="col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="tablita"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <br /><br />
+
+      <div class="row">
+        <div class="col-auto">
+          <div class="card mb-3" style="max-width: 540px">
+            <div class="row g-0">
+              <div class="col-md-4">
+                <img
+                  src="img/Imagen2.png"
+                  class="img-fluid rounded-start"
+                  alt="..."
+                />
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title text-primary">
+                    Calculos de tiras o flejes
+                  </h5>
+                  <p class="card-text">
+                    Diametro Interno fleje (mm)
+                    <input
+                      class="form-control"
+                      type="number"
+                      id="D24"
+                      value="508"
+                      readonly
+                    />
+                  </p>
+                  <p class="card-text">
+                    Ancho Fleje (mm)
+                    <input
+                      class="form-control"
+                      type="number"
+                      id="D25"
+                      placeholder="Solo medidas en mm"
+                    />
+                  </p>
+                  <p class="card-text">
+                    Peso Fleje (Kg)
+                    <input
+                      class="form-control"
+                      type="number"
+                      id="D26"
+                      placeholder="Solo medidas en kg"
+                    />
+                  </p>
+                  <p class="card-text">
+                    Diametro Externo fleje (mm)
+                    <input
+                      class="form-control"
+                      type="number"
+                      id="D27"
+                      placeholder="Solo medidas en mm"
+                    />
+                  </p>
+
+                  <button
+                    id="btn_guardar"
+                    class="btn btn-success"
+                    onclick="Calculart()"
+                  >
+                    Calcular
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <span id="res"> </span>
+        </div>
+      </div>
+      <br />
+      <br />
+      <div class="row">
+        <div class="col">
+          <table id="tb-1" class="table table-bordered fs-7">
+            <thead class="">
+              <tr>
+                <th scope="col">Calidad material</th>
+                <th scope="col">
+                  <select
+                    class="form-select border-0"
+                    id="_sele_D"
+                    name="_sele_D"
+                    onchange="ShowSelected2();"
+                  >
+                    <option selected>Open this select menu</option>
+                    <option value="1">Hot Rolled / Cold Rolled</option>
+                    <option value="2">Hot Rolled Alfajor</option>
+                    <option value="3">Galvanizado</option>
+                  </select>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">Ancho rollo (mm)</th>
+                <td id="tb_dens"></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-primary">
+                Calculo de numero de laminas (teorico)
+              </h5>
+              <p class="card-text">
+                Espesor (mm)
+                <input
+                  class="form-control"
+                  type="number"
+                  id="C39"
+                  placeholder="Solo medidas en mm"
+                />
+              </p>
+              <p class="card-text">
+                Ancho (mm)
+                <input
+                  class="form-control"
+                  type="number"
+                  id="D39"
+                  placeholder="Solo medidas en mm"
+                />
+              </p>
+              <p class="card-text">
+                Largo (mm)
+                <input
+                  class="form-control"
+                  type="number"
+                  id="E39"
+                  placeholder="Solo medidas en kg"
+                />
+              </p>
+              <p class="card-text">
+                Peso atado (kg)
+                <input
+                  class="form-control"
+                  type="number"
+                  id="F39"
+                  placeholder="Solo medidas en kg"
+                />
+              </p>
+              <p class="card-text">
+                Peso lamina / unidad (kg)
+                <input
+                  class="form-control"
+                  type="number"
+                  id="G39"
+                  placeholder=""
+                  disabled
+                />
+              </p>
+              <p class="card-text">
+                Número laminas
+                <input
+                  class="form-control"
+                  type="number"
+                  id="H39"
+                  placeholder=""
+                  disabled
+                />
+              </p>
+
+              <button
+                id="btn_guardar"
+                class="btn btn-success"
+                onclick="Calculart()"
+              >
+                Calcular
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-primary">Calculo de peso (teorico)</h5>
+              <p class="card-text">
+                Espesor (mm)
+                <input
+                  class="form-control"
+                  type="number"
+                  id="C43"
+                  placeholder="Solo medidas en mm"
+                />
+              </p>
+              <p class="card-text">
+                Ancho (mm)
+                <input
+                  class="form-control"
+                  type="number"
+                  id="D43"
+                  placeholder="Solo medidas en mm"
+                />
+              </p>
+              <p class="card-text">
+                Largo (mm)
+                <input
+                  class="form-control"
+                  type="number"
+                  id="E43"
+                  placeholder="Solo medidas en kg"
+                />
+              </p>
+
+              <p class="card-text">
+                Número laminas
+                <input
+                  class="form-control"
+                  type="number"
+                  id="F43"
+                  placeholder=""
+                />
+              </p>
+              <p class="card-text">
+                Peso lamina / unidad (kg)
+                <input
+                  class="form-control"
+                  type="number"
+                  id="G43"
+                  placeholder=""
+                  disabled
+                />
+              </p>
+
+              <p class="card-text">
+                Peso atado (kg)
+                <input
+                  class="form-control"
+                  type="number"
+                  id="H43"
+                  placeholder=""
+                  disabled
+                />
+              </p>
+
+              <button
+                id="btn_guardar"
+                class="btn btn-success"
+                onclick="Calculart()"
+              >
+                Calcular
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br />
+    </div>
+
+    <script src="js//filter.js"></script>
+  </body>
+</html>
