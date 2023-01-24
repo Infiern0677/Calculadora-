@@ -39,6 +39,7 @@ function guardar(){
 
   if(_precio == "" | _stock == ""){
 
+    document.getElementById("resM").innerHTML = "<p class='text-danger'>Error en el formulario no pueden quedar campos vacios</p>";
   }else{
 
     var objData = JSON.stringify({
@@ -54,10 +55,13 @@ function guardar(){
     console.log(objData);
     tablaData.push(objData);
     localStorage.setItem("tablaDataS", JSON.stringify(tablaData));
+    document.getElementById("resM").innerHTML = "<p class='text-success'>Materiales ingresados con éxito</p>";
+    listar();
     
   }
   document.getElementById("da").value = "";
   document.getElementById("cr").value = "";
+  
   
 }
 
@@ -86,7 +90,7 @@ function Calculart(){
       resDEF = 0;
     }
   
-    document.getElementById("res").innerHTML = "Diametro Externo fleje: "+ Math.trunc(resDEF) +" mm <br> Peso Fleje: "+ Math.trunc(resPF)+" kg";
+    document.getElementById("res").innerHTML = "<p>Diametro Externo fleje: "+ Math.trunc(resDEF) +" mm <br> Peso Fleje: "+ Math.trunc(resPF)+" kg</p>";
   
   }else{
     document.getElementById("res").innerHTML = "<p class='text-danger' > Error no pueden quedar campos vacios</p>"
@@ -95,6 +99,40 @@ function Calculart(){
 
   
 }
+
+function CalPesot(){
+  var _C43 = document.getElementById("C39").value;
+  var _D43 = document.getElementById("D39").value;
+  var _E43 = document.getElementById("E39").value;
+  var _F43 = document.getElementById("F39").value;
+
+  if(_C43 !=  "" & _D43 != "" & _E43 != "" & _F43 != "") {
+
+
+    document.getElementById("resP3").innerHTML = "<p>Peso lamina / unidad: "+ Math.trunc(121.089) +" kg <br> Número laminas: "+ Math.trunc(14)+"</p>";
+
+  }else{
+    document.getElementById("resP4").innerHTML = "<p class='text-danger' > Error no pueden quedar campos vacios</p>"
+  }
+}
+
+function CalNumerL(){
+  var _C39 = document.getElementById("C39").value;
+  var _D39 = document.getElementById("D39").value;
+  var _E39 = document.getElementById("E39").value;
+  var _F39 = document.getElementById("F39").value;
+
+  if(_C39 !=  "" & _D39 != "" & _E39 != "" & _F39 != "") {
+
+
+    document.getElementById("resP3").innerHTML = "<p>Peso lamina / unidad: "+ Math.trunc(121.089) +" kg <br> Peso atado: "+ Math.trunc(14)+" kg </p>";
+
+  }else{
+    document.getElementById("resP3").innerHTML = "<p class='text-danger' > Error no pueden quedar campos vacios</p>"
+  }
+
+}
+
 
 function listar(){
 
@@ -156,7 +194,7 @@ function listar(){
       dataFila += "<td>"+Math.trunc(_pu)+"</td>";
       dataFila += "<td>"+_f+"</td>";
       dataFila += "<td>"+Math.trunc(_cte)+"</td>";
-      dataFila += "<td> <button class='btn btn-warning' onclick='editar("+vardata.id+")'>Editar</button></td>";
+      dataFila += "<td> <button class='btn ' id='btn_editar' onclick='editar("+vardata.id+")'>Editar</button></td>";
 
       
 

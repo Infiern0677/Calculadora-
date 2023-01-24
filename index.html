@@ -23,16 +23,16 @@
   <body>
     <div class="container">
       <div class="row mt-5">
-        <h5 class="text-primary mb-2">Calculos de tiras o flejes</h5>
+        <h5 class="text-primary mb-2">Cálculo de tiras o flejes</h5>
         <div class="col">
-          <table id="tb-1" class="table table-bordered fs-7">
+          <table id="tb-1" class="table table-bordered shadow  bg-body rounded fs-7">
             <thead class="">
               <tr>
                 <th scope="col">Calidad material</th>
                 <th scope="col">
                   <select
                     class="form-select border-0"
-                    id="Type_c"
+                    id="Type_c" autofocus
                     name="Type_c"
                     onchange="ShowSelected();"
                   >
@@ -87,7 +87,7 @@
               <!-- Button trigger modal -->
               <button
                 type="button"
-                class="btn btn-primary"
+                class="btn " id="btn_agregar"
                 data-bs-toggle="modal"
                 data-bs-target="#staticBackdrop"
               >
@@ -108,7 +108,7 @@
                   <div class="modal-content">
                     <div class="modal-header">
                       <h5 class="modal-title" id="staticBackdropLabel">
-                        Modal title
+                        Agregar nuevas medidas
                       </h5>
                       <button
                         type="button"
@@ -120,16 +120,22 @@
                     <div class="modal-body">
                       <input
                         id="da"
-                        placeholder="Dimensón ancho mm:"
+                        placeholder="Dimensón ancho mm:" class="form-control mb-3"
                         requered
-                        type="number"
-                      /><br /><br />
+                        type="number">
                       <input
                         id="cr"
-                        placeholder="Cantidad requerida kg:"
+                        placeholder="Cantidad requerida kg:" class="form-control"
                         type="number"
                       /><br /><br />
+
+
+                      <span id="resM">
+
+                      </span>
                     </div>
+
+
                     <div class="modal-footer">
                       <button
                         type="button"
@@ -140,10 +146,10 @@
                       </button>
                       <button
                         id="btn_guardar"
-                        class="btn btn-success"
+                        class="btn" 
                         onclick="guardar()"
                       >
-                        agregar
+                        Agregar
                       </button>
                     </div>
                   </div>
@@ -151,16 +157,16 @@
               </div>
 
 
-              <button id="btn_mostrar" class="btn btn-success" onclick="listar()">
+              <button id="btn_mostrar" class="btn" onclick="listar()">
                 Mostrar
               </button>
 
-              <button class="btn btn-danger" id="btn_eliminar" onclick="eliminar()">eliminar</button>
+              <button class="btn"  id="btn_eliminar" onclick="eliminar()">Eliminar</button>
             </div>
      
           </div><!---End---->
 
-          <table id="tablaCal" class="table table-bordered fs-7">
+          <table id="tablaCal" class="table table-bordered fs-7 mt-3">
             <thead class="">
               <tr>
                 <th scope="col">#</th>
@@ -180,10 +186,11 @@
       <br /><br />
 
       <div class="row">
-        <div class="col-auto">
-          <div class="card mb-3" style="max-width: 540px">
+        <div class="col"></div>
+        <div class="col-md-4 col-sm-12">
+          <div class="card mb-3  mx-auto shadow  bg-body rounded" >
             <div class="row g-0">
-              <div class="col-md-4">
+              <div class="col-md-4 d-none d-sm-none d-md-block work-right-text d-flex align-items-center">
                 <img
                   src="img/Imagen2.png"
                   class="img-fluid rounded-start"
@@ -193,7 +200,7 @@
               <div class="col-md-8">
                 <div class="card-body">
                   <h5 class="card-title text-primary">
-                    Calculos de tiras o flejes
+                    Cálculos de tiras o flejes
                   </h5>
                   <p class="card-text">
                     Diametro Interno fleje (mm)
@@ -235,24 +242,31 @@
 
                   <button
                     id="btn_guardar"
-                    class="btn btn-success"
+                    class="btn"
                     onclick="Calculart()"
                   >
                     Calcular
                   </button>
+                
                 </div>
+                
+            
               </div>
             </div>
+            <hr>
+            <span id="res" class="mt-2 px-5 bg-body text-center mb-2"> </span>
           </div>
-        </div>
-        <div class="col">
-          <span id="res"> </span>
-        </div>
+          
+        </div><!-----endCol--->
+        <div class="col"></div>
+        
+  
+      
       </div>
       <br />
       <br />
       <div class="row">
-        <div class="col">
+        <div class="col-md-4 col-sm-12">
           <table id="tb-1" class="table table-bordered fs-7">
             <thead class="">
               <tr>
@@ -280,11 +294,11 @@
             </tbody>
           </table>
         </div>
-        <div class="col">
+        <div class="col-md-4 col-sm-12 mb-3" >
           <div class="card">
             <div class="card-body">
               <h5 class="card-title text-primary">
-                Calculo de numero de laminas (teorico)
+                Cálculo # de laminas (teorico)
               </h5>
               <p class="card-text">
                 Espesor (mm)
@@ -322,41 +336,23 @@
                   placeholder="Solo medidas en kg"
                 />
               </p>
-              <p class="card-text">
-                Peso lamina / unidad (kg)
-                <input
-                  class="form-control"
-                  type="number"
-                  id="G39"
-                  placeholder=""
-                  disabled
-                />
-              </p>
-              <p class="card-text">
-                Número laminas
-                <input
-                  class="form-control"
-                  type="number"
-                  id="H39"
-                  placeholder=""
-                  disabled
-                />
-              </p>
 
               <button
                 id="btn_guardar"
-                class="btn btn-success"
-                onclick="Calculart()"
+                class="btn "
+                onclick="CalNumerL()"
               >
                 Calcular
               </button>
+              <hr>
+            <span id="resP3" class="mt-2 px-5 bg-body text-center mb-2"> </span>
             </div>
           </div>
         </div>
-        <div class="col">
+        <div class="col-md-4 col-sm-12">
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title text-primary">Calculo de peso (teorico)</h5>
+              <h5 class="card-title text-primary">Cálculo de peso (teorico)</h5>
               <p class="card-text">
                 Espesor (mm)
                 <input
@@ -394,35 +390,16 @@
                   placeholder=""
                 />
               </p>
-              <p class="card-text">
-                Peso lamina / unidad (kg)
-                <input
-                  class="form-control"
-                  type="number"
-                  id="G43"
-                  placeholder=""
-                  disabled
-                />
-              </p>
-
-              <p class="card-text">
-                Peso atado (kg)
-                <input
-                  class="form-control"
-                  type="number"
-                  id="H43"
-                  placeholder=""
-                  disabled
-                />
-              </p>
-
+             
               <button
                 id="btn_guardar"
-                class="btn btn-success"
-                onclick="Calculart()"
+                class="btn "
+                onclick="CalPesot()"
               >
                 Calcular
               </button>
+              <hr>
+              <span id="resP4" class="mt-2 px-5 bg-body text-center mb-2"> </span>
             </div>
           </div>
         </div>

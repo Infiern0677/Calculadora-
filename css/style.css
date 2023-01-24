@@ -6,3 +6,25 @@
   box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
 }
+
+
+#btn_eliminar{
+  color: white;
+  background-color: #ec5960;
+}
+
+
+#btn_editar{
+  color: white;
+  background-color: #efb810;
+}
+
+#btn_guardar, #btn_mostrar{
+  color: white;
+  background-color: #148F77;
+}
+
+#btn_agregar{
+  color: white;
+  background-color: #2E86C1 ;
+}
